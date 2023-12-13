@@ -37,13 +37,8 @@ const Task: React.FC<TaskProps> = ({
         }`}
         type="button"
         aria-label="toggle done"
-        onClick={(e) => {
-          console.trace(); // Add this line for console trace
-          e.stopPropagation(); // Prevent event bubbling
-          onToggleDone();
-        }}
+        onClick={onToggleDone}
       ></button>
-
       <button
         className="absolute bottom-0 right-1 rounded-full text-xl"
         type="button"

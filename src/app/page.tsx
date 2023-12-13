@@ -67,22 +67,43 @@ export default function Home() {
   const handleToggleDone = (path: number[]) => {
     setTasks((currentTasks) => {
       const newTasks = [...currentTasks];
-      let taskToUpdate = newTasks;
 
+      // Function to recursively update parent task status
+      const updateParentTasks = (path: number[]) => {
+        if (path.length < 2) return; // If there's no parent, stop recursion
+
+        const parentPath = path.slice(0, -1);
+        const parentIndex = parentPath[parentPath.length - 1];
+        let parentTask =
+          parentPath.length === 1
+            ? newTasks[parentIndex]
+            : newTasks[parentPath[0]];
+
+        for (let i = 1; i < parentPath.length; i++) {
+          parentTask = parentTask.subtasks[parentPath[i]];
+        }
+
+        parentTask.done = parentTask.subtasks.every((subtask) => subtask.done);
+        updateParentTasks(parentPath); // Recursively update the status of the parent's parent
+      };
+
+      // Toggle the current task's done status
+      let taskToUpdate: TaskType[] = newTasks;
       for (let i = 0; i < path.length - 1; i++) {
         taskToUpdate = taskToUpdate[path[i]].subtasks;
       }
+      const currentTask = taskToUpdate[path[path.length - 1]];
+      currentTask.done = !currentTask.done;
 
-      taskToUpdate[path[path.length - 1]].done =
-        !taskToUpdate[path[path.length - 1]].done;
+      // Update parent task status if needed
+      updateParentTasks(path);
 
       console.log(
         "Toggle done for:",
         path,
         "new done status:",
-        taskToUpdate[path[path.length - 1]].done,
+        currentTask.done,
       );
-
       return newTasks;
     });
   };
@@ -101,6 +122,8 @@ export default function Home() {
         done: false,
         subtasks: [],
       });
+
+      console.log("Added node to:", path);
 
       return newTasks;
     });
