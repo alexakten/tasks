@@ -41,11 +41,11 @@ export default function Home() {
           >
             <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-zinc-500 drop-shadow-sm">
               <p>
-                Launching soon |
-                <span className="font-normal text-white">
+                v.1.0 launching soon
+                {/* <span className="font-normal text-white">
                   {" "}
                   Join waitlist -&gt;
-                </span>
+                </span> */}
               </p>
             </div>
           </div>
@@ -56,10 +56,7 @@ export default function Home() {
           >
             Boost productivity with subtasking
           </h1>
-          <p
-            className="text-md xs:text-xl max-w-md font-normal text-zinc-200"
-            style={{ lineHeight: 1.5 }}
-          >
+          <p className="text-md xs:text-xl max-w-md font-normal leading-[24px] text-zinc-200">
             Break complex projects down into microtasks and focus on what needs
             to get done.
           </p>
