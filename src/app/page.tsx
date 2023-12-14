@@ -56,7 +56,7 @@ export default function Home() {
           >
             Boost productivity with subtasking
           </h1>
-          <p className="text-md xs:text-xl max-w-md font-normal leading-[24px] text-zinc-200">
+          <p className="text-lg xs:text-xl max-w-md font-normal leading-[24px] text-zinc-200">
             Break complex projects down into microtasks and focus on what needs
             to get done.
           </p>
