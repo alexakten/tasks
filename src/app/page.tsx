@@ -1,140 +1,80 @@
-// src/app/page.tsx
 "use client";
-import React, { useState } from "react";
-import Task from "./components/Task";
+
 import Nav from "./components/Nav";
 
-interface TaskType {
-  title: string;
-  done: boolean;
-  subtasks: TaskType[];
-}
-
 export default function Home() {
-  const [tasks, setTasks] = useState<TaskType[]>([
-    {
-      title: "Root Task",
-      done: false,
-      subtasks: [],
-    },
-  ]);
+  //#region
 
-  const renderTasks = (tasks: TaskType[], path: number[] = []) => {
-    return (
-      <div className="flex items-center gap-16">
-        <div className="task-wrapper flex flex-col gap-3">
-          {tasks.map((task, index) => (
-            <div key={path.concat(index).join("-")}>
-              <Task
-                title={task.title}
-                done={task.done}
-                onTitleChange={(newTitle) =>
-                  handleTitleChange([...path, index], newTitle)
-                }
-                onToggleDone={() => handleToggleDone([...path, index])}
-                onAddSubtask={() => handleAddSubtask([...path, index])}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-3">
-          {tasks.map((task, index) =>
-            task.subtasks.length > 0 ? (
-              <div key={path.concat(index).join("-") + "-sub"}>
-                {renderTasks(task.subtasks, [...path, index])}
-              </div>
-            ) : null,
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  // Update the handle functions to correctly navigate the nested structure
-  const handleTitleChange = (path: number[], newTitle: string) => {
-    setTasks((currentTasks) => {
-      const newTasks = [...currentTasks];
-      let taskToUpdate = newTasks;
-
-      for (let i = 0; i < path.length - 1; i++) {
-        taskToUpdate = taskToUpdate[path[i]].subtasks;
-      }
-
-      taskToUpdate[path[path.length - 1]].title = newTitle;
-      return newTasks;
-    });
-  };
-
-  const handleToggleDone = (path: number[]) => {
-    setTasks((currentTasks) => {
-      const newTasks = [...currentTasks];
-
-      // Function to recursively update parent task status
-      const updateParentTasks = (path: number[]) => {
-        if (path.length < 2) return; // If there's no parent, stop recursion
-
-        const parentPath = path.slice(0, -1);
-        const parentIndex = parentPath[parentPath.length - 1];
-        let parentTask =
-          parentPath.length === 1
-            ? newTasks[parentIndex]
-            : newTasks[parentPath[0]];
-
-        for (let i = 1; i < parentPath.length; i++) {
-          parentTask = parentTask.subtasks[parentPath[i]];
-        }
-
-        parentTask.done = parentTask.subtasks.every((subtask) => subtask.done);
-        updateParentTasks(parentPath); // Recursively update the status of the parent's parent
-      };
-
-      // Toggle the current task's done status
-      let taskToUpdate: TaskType[] = newTasks;
-      for (let i = 0; i < path.length - 1; i++) {
-        taskToUpdate = taskToUpdate[path[i]].subtasks;
-      }
-      const currentTask = taskToUpdate[path[path.length - 1]];
-      currentTask.done = !currentTask.done;
-
-      // Update parent task status if needed
-      updateParentTasks(path);
-
-      console.log(
-        "Toggle done for:",
-        path,
-        "new done status:",
-        currentTask.done,
-      );
-      return newTasks;
-    });
-  };
-
-  const handleAddSubtask = (path: number[]) => {
-    setTasks((currentTasks) => {
-      const newTasks = [...currentTasks];
-      let taskToUpdate = newTasks;
-
-      for (let i = 0; i < path.length - 1; i++) {
-        taskToUpdate = taskToUpdate[path[i]].subtasks;
-      }
-
-      taskToUpdate[path[path.length - 1]].subtasks.push({
-        title: "New Subtask",
-        done: false,
-        subtasks: [],
-      });
-
-      console.log("Added node to:", path);
-
-      return newTasks;
-    });
-  };
+  //#endregion
 
   return (
-    <main className="flex h-screen flex-col items-center justify-center bg-[#151515]">
+    <main
+      className="flex flex-col items-center justify-between overflow-hidden bg-[#151515]"
+      style={{
+        backgroundSize: "128px 128px",
+        backgroundImage: `
+      linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)
+`,
+      }}
+    >
+      {/* Grid Overlay */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "radial-gradient(circle, transparent 20%, black 90%)",
+        }}
+      />
       <Nav />
-      <section className="flex w-screen items-center justify-start gap-4 px-10">
-        {renderTasks(tasks)}
+
+      {/* Hero Section */}
+      <section className="relative flex h-screen w-screen items-center justify-center overflow-hidden px-4">
+        <div className="flex max-w-4xl flex-col items-center gap-6 text-center text-white">
+          <div
+            className="flex items-center justify-center rounded-full bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"
+            style={{ padding: 1 }}
+          >
+            <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-zinc-500 drop-shadow-sm">
+              <p>
+                Launching soon |
+                <span className="font-normal text-white">
+                  {" "}
+                  Join waitlist -&gt;
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <h1 className="xs:text-7xl max-w-2xl bg-gradient-to-tr from-zinc-400 via-zinc-200 to-zinc-50 bg-clip-text text-2xl font-medium leading-8 tracking-tight text-transparent">
+            Boost productivity with subtasking
+          </h1>
+          <p
+            className="text-md xs:text-xl max-w-md font-normal text-zinc-200"
+            style={{ lineHeight: 1.5 }}
+          >
+            Break complex projects down into microtasks and focus on what needs
+            to get done.
+          </p>
+          <div>
+            <button
+              className="animate-rotate-light relative flex items-center justify-center rounded-full drop-shadow-sm"
+              style={{
+                padding: 1,
+                backgroundSize: "150% 150%",
+                backgroundImage:
+                  "radial-gradient(circle at center center, #e5e7eb, #71717a 30%, #4b5563 70%)",
+              }}
+            >
+              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-5 py-3">
+                <p className="text-zinc-200">Join waitlist </p>
+              </div>
+            </button>
+          </div>
+        </div>
       </section>
     </main>
   );

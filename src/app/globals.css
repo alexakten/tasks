@@ -18,6 +18,39 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+@keyframes rotate-light {
+  0%, 100% {
+    background-position: center top;
+  }
+  12.5% {
+    background-position: right top;
+  }
+  25% {
+    background-position: right center;
+  }
+  37.5% {
+    background-position: right bottom;
+  }
+  50% {
+    background-position: center bottom;
+  }
+  62.5% {
+    background-position: left bottom;
+  }
+  75% {
+    background-position: left center;
+  }
+  87.5% {
+    background-position: left top;
+  }
+}
+
+
+.animate-rotate-light {
+  animation: rotate-light 5s linear infinite;
+}
+
+
 
 
 
