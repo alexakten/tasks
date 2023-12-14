@@ -11,7 +11,8 @@ export default function Home() {
     <main
       className="flex flex-col items-center justify-between overflow-hidden bg-[#151515]"
       style={{
-        backgroundSize: "128px 128px",
+        backgroundSize: "164px 164px",
+        backgroundPosition: "center",
         backgroundImage: `
       linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)
@@ -39,7 +40,7 @@ export default function Home() {
             className="flex items-center justify-center rounded-full bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"
             style={{ padding: 1 }}
           >
-            <div className="relative text-[14px] flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-zinc-500 drop-shadow-sm">
+            <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-[14px] text-zinc-500 drop-shadow-sm">
               <p>
                 v.1.0 launching soon
                 {/* <span className="font-normal text-white">
@@ -56,7 +57,7 @@ export default function Home() {
           >
             Boost productivity with subtasking
           </h1>
-          <p className="text-lg xs:text-xl max-w-md font-normal leading-[24px] text-zinc-200">
+          <p className="xs:text-xl max-w-md text-lg font-normal leading-[24px] text-zinc-200">
             Break complex projects down into microtasks and focus on what needs
             to get done.
           </p>
