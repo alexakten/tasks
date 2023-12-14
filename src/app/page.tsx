@@ -39,7 +39,7 @@ export default function Home() {
             className="flex items-center justify-center rounded-full bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"
             style={{ padding: 1 }}
           >
-            <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-zinc-500 drop-shadow-sm">
+            <div className="relative text-[14px] flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-1 text-zinc-500 drop-shadow-sm">
               <p>
                 v.1.0 launching soon
                 {/* <span className="font-normal text-white">
