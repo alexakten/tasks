@@ -71,7 +71,7 @@ export default function Home() {
                   "radial-gradient(circle at center center, #e5e7eb, #71717a 30%, #4b5563 70%)",
               }}
             >
-              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-5 py-3">
+              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] hover:bg-[#212121] px-5 py-3">
                 <p className="text-zinc-200">Join waitlist </p>
               </div>
             </button>
