@@ -20,6 +20,7 @@ export default function Home() {
     >
       {/* Grid Overlay */}
       <div
+        className="overflow-hidden"
         style={{
           position: "absolute",
           top: 0,
