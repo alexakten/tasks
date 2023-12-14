@@ -49,7 +49,7 @@ export default function Home() {
             </div>
           </div>
 
-          <h1 className="xs:text-7xl max-w-2xl bg-gradient-to-tr from-zinc-400 via-zinc-200 to-zinc-50 bg-clip-text text-2xl font-medium leading-8 tracking-tight text-transparent">
+          <h1 className="xs:text-7xl max-w-2xl bg-gradient-to-tr from-zinc-400 via-zinc-200 to-zinc-50 bg-clip-text text-4xl font-medium leading-8 tracking-tight text-transparent">
             Boost productivity with subtasking
           </h1>
           <p
