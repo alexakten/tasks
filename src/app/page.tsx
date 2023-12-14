@@ -14,8 +14,8 @@ export default function Home() {
         backgroundSize: "164px 164px",
         backgroundPosition: "center",
         backgroundImage: `
-      linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)
+      linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px)
 `,
       }}
     >
@@ -71,7 +71,7 @@ export default function Home() {
                   "radial-gradient(circle at center center, #e5e7eb, #71717a 30%, #4b5563 70%)",
               }}
             >
-              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] hover:bg-[#212121] px-5 py-3">
+              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] hover:bg-[#202020] px-5 py-3">
                 <p className="text-zinc-200">Start for free </p>
               </div>
             </button>
