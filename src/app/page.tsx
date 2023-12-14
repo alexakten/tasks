@@ -72,7 +72,7 @@ export default function Home() {
               }}
             >
               <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] hover:bg-[#212121] px-5 py-3">
-                <p className="text-zinc-200">Join waitlist </p>
+                <p className="text-zinc-200">Start for free </p>
               </div>
             </button>
           </div>
