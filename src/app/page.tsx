@@ -2,6 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import Task from "./components/Task";
+import Nav from "./components/Nav";
 
 interface TaskType {
   title: string;
@@ -20,8 +21,8 @@ export default function Home() {
 
   const renderTasks = (tasks: TaskType[], path: number[] = []) => {
     return (
-      <div className="flex items-center gap-24">
-        <div className="flex flex-col gap-4">
+      <div className="flex items-center gap-16">
+        <div className="task-wrapper flex flex-col gap-3">
           {tasks.map((task, index) => (
             <div key={path.concat(index).join("-")}>
               <Task
@@ -36,7 +37,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {tasks.map((task, index) =>
             task.subtasks.length > 0 ? (
               <div key={path.concat(index).join("-") + "-sub"}>
@@ -130,8 +131,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center">
-      <section className="flex h-screen w-screen items-center justify-start gap-4 overflow-x-auto overflow-y-auto px-4">
+    <main className="flex h-screen flex-col items-center justify-center bg-[#151515]">
+      <Nav />
+      <section className="flex w-screen items-center justify-start gap-4 px-10">
         {renderTasks(tasks)}
       </section>
     </main>

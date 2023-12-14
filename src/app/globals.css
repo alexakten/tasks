@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-  :root {
+  /* :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
-}
+} */
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -18,38 +18,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.task-list {
-  list-style-type: none;
-  padding: 0;
-  position: relative;
-}
 
-.task-list li::before, .task-list li::after {
-  content: '';
-  position: absolute;
-  left: -20px; /* Adjust this value based on your layout */
-  width: 20px; /* This should be the same as the left value */
-}
-
-.task-list li::before {
-  top: 0;
-  bottom: 50%;
-  border-left: 2px solid #fff; /* Adjust color as needed */
-}
-
-.task-list li::after {
-  top: 50%;
-  bottom: 0;
-  border-top: 2px solid #fff; /* Adjust color as needed */
-}
-
-.task-container {
-  padding-left: 40px; /* Adjust this value based on your layout */
-}
-
-.subtask-container {
-  padding-left: 20px; /* Adjust this value based on your layout */
-}
 
 
 

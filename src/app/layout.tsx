@@ -4,7 +4,7 @@ import "./globals.css";
 // import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "MicroTask",
+  title: "Tasktree",
   description: "Break down your tasks",
 };
 
