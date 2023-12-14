@@ -51,7 +51,7 @@ export default function Home() {
           </div>
 
           <h1
-            className="xs:text-7xl max-w-2xl bg-gradient-to-tr from-zinc-400 via-zinc-200 to-zinc-50 bg-clip-text text-5xl font-medium tracking-tight text-transparent"
+            className="xs:text-7xl max-w-2xl bg-gradient-to-tr from-zinc-400 via-zinc-200 to-zinc-50 bg-clip-text text-[40px] font-medium tracking-tight text-transparent"
             style={{ lineHeight: 1.02 }}
           >
             Boost productivity with subtasking
