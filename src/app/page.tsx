@@ -1,6 +1,7 @@
 "use client";
 
 import Nav from "./components/Nav";
+import Link from "next/link";
 
 export default function Home() {
   //#region
@@ -28,7 +29,7 @@ export default function Home() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: "radial-gradient(circle, transparent 20%, black 90%)",
+          background: "radial-gradient(circle, transparent 1%, black 70%)",
         }}
       />
       <Nav />
@@ -62,19 +63,21 @@ export default function Home() {
             to get done.
           </p>
           <div>
-            <button
-              className="animate-rotate-light relative flex items-center justify-center rounded-full drop-shadow-sm"
-              style={{
-                padding: 1,
-                backgroundSize: "150% 150%",
-                backgroundImage:
-                  "radial-gradient(circle at center center, #e5e7eb, #71717a 30%, #4b5563 70%)",
-              }}
-            >
-              <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] hover:bg-[#202020] px-5 py-3">
-                <p className="text-zinc-200">Start for free </p>
-              </div>
-            </button>
+            <Link href={"/dashboard"}>
+              <button
+                className="animate-rotate-light relative flex items-center justify-center rounded-full drop-shadow-sm"
+                style={{
+                  padding: 1,
+                  backgroundSize: "150% 150%",
+                  backgroundImage:
+                    "radial-gradient(circle at center center, #e5e7eb, #71717a 30%, #4b5563 70%)",
+                }}
+              >
+                <div className="relative flex h-full w-full items-center rounded-full bg-[#252525] px-5 py-3 hover:bg-[#202020]">
+                  <p className="text-zinc-200">Try demo -&gt; </p>
+                </div>
+              </button>
+            </Link>
           </div>
         </div>
       </section>

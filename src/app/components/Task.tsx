@@ -43,12 +43,66 @@ const Task: React.FC<TaskProps> = ({
           onClick={onToggleDone}
         ></button>
         <button
-          className="absolute bottom-0 right-1 rounded-full text-xl"
+          className="absolute bottom-1 right-1 rounded-full text-xs"
           type="button"
           onClick={onAddSubtask}
           aria-label="add subtask"
         >
-          +
+          <svg
+            width="13"
+            height="10"
+            viewBox="0 0 13 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="1.99966" cy="4.99991" r="1.66666" fill="white" />
+            <circle
+              cx="11.1107"
+              cy="1.6666"
+              r="1.66666"
+              transform="rotate(180 11.1107 1.6666)"
+              fill="white"
+            />
+            <circle
+              cx="11.1107"
+              cy="8.33334"
+              r="1.66666"
+              transform="rotate(180 11.1107 8.33334)"
+              fill="white"
+            />
+            <line
+              x1="1.55566"
+              y1="4.99987"
+              x2="6.00008"
+              y2="4.99987"
+              stroke="white"
+              stroke-width="1.1111"
+            />
+            <line
+              x1="6.55555"
+              y1="2.22217"
+              x2="6.55555"
+              y2="7.77769"
+              stroke="white"
+              stroke-width="1.1111"
+            />
+            <line
+              x1="10.4453"
+              y1="1.66639"
+              x2="6.0009"
+              y2="1.66639"
+              stroke="white"
+              stroke-width="1.1111"
+            />
+            <line
+              x1="10.4453"
+              y1="8.33314"
+              x2="6.0009"
+              y2="8.33314"
+              stroke="white"
+              stroke-width="1.1111"
+            />
+          </svg>
         </button>
       </div>
     </div>

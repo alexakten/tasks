@@ -1,8 +1,9 @@
-// src/app/page.tsx
 "use client";
-import React, { useState } from "react";
-import Task from "../components/Task";
-import Nav from "../components/Nav";
+import React, { useState, useEffect } from "react";
+
+import Task from "../../components/Task";
+import Nav from "../../components/Nav";
+import Link from "next/link";
 
 interface TaskType {
   title: string;
@@ -10,19 +11,31 @@ interface TaskType {
   subtasks: TaskType[];
 }
 
-export default function Home() {
+export default function ProjectPage({
+  params,
+}: {
+  params: { projectId: string };
+}) {
+  const [projectId, setProjectId] = useState(null);
+  const [projectTitle, setProjectTitle] = useState("This is a project title");
+
   const [tasks, setTasks] = useState<TaskType[]>([
-    {
-      title: "Root Task",
-      done: false,
-      subtasks: [],
-    },
+    // {
+    //   title: "New subtask",
+    //   done: false,
+    //   subtasks: [],
+    // },
   ]);
 
-  const renderTasks = (tasks: TaskType[], path: number[] = []) => {
+  const renderTasks = (
+    tasks: TaskType[],
+    path: number[] = [],
+    depth: number = 1,
+  ) => {
     return (
-      <div className="flex items-center gap-16">
-        <div className="task-wrapper flex flex-col gap-3">
+      <div className="flex items-start gap-16">
+        {/* <p className="text-zinc-100">Depth {depth}</p> */}
+        <div className="flex flex-col gap-3">
           {tasks.map((task, index) => (
             <div key={path.concat(index).join("-")}>
               <Task
@@ -37,13 +50,16 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* Loop to render subtasks recursively */}
         <div className="flex flex-col gap-3">
-          {tasks.map((task, index) =>
-            task.subtasks.length > 0 ? (
-              <div key={path.concat(index).join("-") + "-sub"}>
-                {renderTasks(task.subtasks, [...path, index])}
-              </div>
-            ) : null,
+          {tasks.map(
+            (task, index) =>
+              task.subtasks.length > 0 && (
+                <div key={path.concat(index).join("-") + "-sub"}>
+                  {renderTasks(task.subtasks, [...path, index], depth + 1)}
+                </div>
+              ),
           )}
         </div>
       </div>
@@ -130,10 +146,37 @@ export default function Home() {
     });
   };
 
+  const addNewMainTask = () => {
+    setTasks((currentTasks) => {
+      // Add a new main task at the root level
+      return [
+        ...currentTasks,
+        {
+          title: "New Task",
+          done: false,
+          subtasks: [],
+        },
+      ];
+    });
+  };
+
   return (
-    <main className="flex h-screen flex-col items-center justify-center bg-[#151515]">
-      <Nav />
-      <section className="flex w-screen items-center justify-start gap-4 px-10">
+    <main className="flex min-h-screen w-screen flex-col items-start bg-[#151515]">
+      <Nav LogoOnly={true} />
+      <section className="mb-40 mt-40 flex flex-col items-start justify-start gap-4 px-10">
+        <Link className="mb-4 text-white" href={"/dashboard"}>
+          {"Back to Dashboard"}
+        </Link>
+        <h1 className="mb-4 text-3xl text-zinc-100">{projectTitle}</h1>
+        <button
+          className="mb-20 flex items-center justify-center rounded-full bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"
+          style={{ padding: 1 }}
+          onClick={addNewMainTask}
+        >
+          <div className="flex h-full w-full items-center rounded-full bg-[#252525] px-4 py-3 text-[14px] text-zinc-100 drop-shadow-sm hover:bg-[#202020]">
+            + New task
+          </div>
+        </button>
         {renderTasks(tasks)}
       </section>
     </main>
