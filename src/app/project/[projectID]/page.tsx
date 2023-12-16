@@ -194,7 +194,7 @@ export default function ProjectPage() {
       <Nav LogoOnly={true} />
       <section className="mb-40 mt-40 flex flex-col items-start justify-start gap-4 px-10">
         <Link className="mb-4 text-white" href={"/dashboard"}>
-          {"<- Dashboard"}
+          {"<- All projects"}
         </Link>
         <h1 className="mb-4 text-3xl text-zinc-100">{projectTitle}</h1>
         <button
