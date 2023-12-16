@@ -147,7 +147,7 @@ export default function ProjectPage() {
       }
 
       taskToUpdate[path[path.length - 1]].subtasks.push({
-        title: "New Subtask",
+        title: "",
         done: false,
         subtasks: [],
       });
@@ -160,11 +160,10 @@ export default function ProjectPage() {
 
   const addNewMainTask = () => {
     setTasks((currentTasks) => {
-      // Add a new main task at the root level
       return [
         ...currentTasks,
         {
-          title: "New Task",
+          title: "",
           done: false,
           subtasks: [],
         },

@@ -62,7 +62,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   const { total, completed } = countTasks(tasks);
 
-
   return (
     <div
       className="relative flex w-full items-center justify-center rounded-md bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"

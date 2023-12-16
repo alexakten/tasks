@@ -43,7 +43,7 @@ const Task: React.FC<TaskProps> = ({
           onClick={onToggleDone}
         ></button>
         <button
-          className="absolute bottom-1 right-1 rounded-full text-xs"
+          className="absolute bottom-1 right-1"
           type="button"
           onClick={onAddSubtask}
           aria-label="add subtask"
