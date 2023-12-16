@@ -71,10 +71,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         className="flex h-full w-full flex-col items-start rounded-full bg-[#252525] text-[14px] text-zinc-500 drop-shadow-sm hover:bg-[#202020]"
         style={{ borderRadius: 5 }}
       >
-        <div className="flex w-full justify-between px-4 pt-2">
-          <p className="text-sm text-zinc-100">{`${completed}/${total} tasks done`}</p>
-          <button className=" text-white " onClick={onDelete}>
-            x
+        <div className="flex w-full items-center justify-between px-4 pt-1">
+          <p className="text-sm text-zinc-500">{`${completed}/${total} tasks done`}</p>
+          <button
+            className="rotate-45 text-2xl font-light text-zinc-500"
+            onClick={onDelete}
+          >
+            +
           </button>
         </div>
 

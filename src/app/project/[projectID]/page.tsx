@@ -58,6 +58,7 @@ export default function ProjectPage() {
                 }
                 onToggleDone={() => handleToggleDone([...path, index])}
                 onAddSubtask={() => handleAddSubtask([...path, index])}
+                onDelete={() => handleDeleteTask([...path, index])} // Pass the delete function here
               />
             </div>
           ))}
@@ -155,6 +156,34 @@ export default function ProjectPage() {
       console.log("Added node to:", path);
 
       return newTasks;
+    });
+  };
+
+  const handleDeleteTask = (path: number[]) => {
+    setTasks((currentTasks) => {
+      const deleteTaskRecursive = (
+        tasks: TaskType[],
+        path: number[],
+      ): TaskType[] => {
+        if (path.length === 1) {
+          // Delete the task at the current level
+          return [...tasks.slice(0, path[0]), ...tasks.slice(path[0] + 1)];
+        } else {
+          // Recurse into subtasks
+          const [head, ...rest] = path;
+          return tasks.map((task, index) => {
+            if (index === head) {
+              return {
+                ...task,
+                subtasks: deleteTaskRecursive(task.subtasks, rest),
+              };
+            }
+            return task;
+          });
+        }
+      };
+
+      return deleteTaskRecursive(currentTasks, path);
     });
   };
 
