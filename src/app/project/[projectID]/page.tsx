@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 import Task from "../../components/Task";
 import Nav from "../../components/Nav";
@@ -11,21 +12,32 @@ interface TaskType {
   subtasks: TaskType[];
 }
 
-export default function ProjectPage({
-  params,
-}: {
-  params: { projectId: string };
-}) {
-  const [projectId, setProjectId] = useState(null);
-  const [projectTitle, setProjectTitle] = useState("This is a project title");
+interface Project {
+  id: string;
+  title: string;
+  tasks: TaskType[];
+}
 
-  const [tasks, setTasks] = useState<TaskType[]>([
-    // {
-    //   title: "New subtask",
-    //   done: false,
-    //   subtasks: [],
-    // },
-  ]);
+export default function ProjectPage() {
+  const pathname = usePathname();
+  const projectId = pathname.split("/").pop(); // Assuming the last segment is projectId
+  const [projectTitle, setProjectTitle] = useState("");
+  const [tasks, setTasks] = useState<TaskType[]>([]); // Initialize tasks state
+
+  useEffect(() => {
+    if (typeof projectId === "string") {
+      // Load the project data from localStorage
+      const savedProjects = localStorage.getItem("projects");
+      if (savedProjects) {
+        const projects: Project[] = JSON.parse(savedProjects);
+        const currentProject = projects.find((p) => p.id === projectId);
+        if (currentProject) {
+          setProjectTitle(currentProject.title);
+          setTasks(currentProject.tasks);
+        }
+      }
+    }
+  }, [projectId]);
 
   const renderTasks = (
     tasks: TaskType[],
@@ -159,6 +171,23 @@ export default function ProjectPage({
       ];
     });
   };
+
+  useEffect(() => {
+    if (typeof projectId === "string") {
+      const savedProjects = localStorage.getItem("projects");
+      if (savedProjects) {
+        const projects: Project[] = JSON.parse(savedProjects);
+        const updatedProjects = projects.map((project) => {
+          if (project.id === projectId) {
+            return { ...project, tasks: tasks };
+          }
+          return project;
+        });
+
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+      }
+    }
+  }, [tasks, projectId]);
 
   return (
     <main className="flex min-h-screen w-screen flex-col items-start bg-[#151515]">

@@ -3,12 +3,24 @@
 import React, { useState } from "react";
 import Link from "next/link";
 
+interface TaskType {
+  title: string;
+  done: boolean;
+  subtasks: TaskType[];
+}
+
 interface ProjectCardProps {
   title: string;
   projectID: string;
+  tasks: TaskType[]; // Updated type for tasks
+  onDelete: () => void; // Add this line
 }
-
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, projectID }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  title,
+  projectID,
+  tasks,
+  onDelete,
+}) => {
   const [editableTitle, setEditableTitle] = useState(title);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +38,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, projectID }) => {
         className="flex h-full w-full flex-col items-start rounded-full bg-[#252525] text-[14px] text-zinc-500 drop-shadow-sm hover:bg-[#202020]"
         style={{ borderRadius: 5 }}
       >
+        <div className="flex w-full justify-end">
+          <button className="px-4 pt-2 text-white " onClick={onDelete}>
+            x
+          </button>
+        </div>
+
         <Link className="w-full" href={`/project/${projectID}`}>
           <div className="h-40 w-full"></div>
         </Link>

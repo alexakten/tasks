@@ -1,24 +1,50 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import ProjectCard from "../components/ProjectCard";
+
+interface TaskType {
+  title: string;
+  done: boolean;
+  subtasks: TaskType[];
+}
+
+interface Project {
+  id: string;
+  title: string;
+  tasks: TaskType[]; // Include tasks property
+}
 
 export default function Dashboard() {
   //#region
 
-  const [projects, setProjects] = useState([
-    { id: "1", title: "Launch Tasktree" },
+  const [projects, setProjects] = useState<Project[]>(() => {
+    const savedProjects = localStorage.getItem("projects");
+    return savedProjects
+      ? JSON.parse(savedProjects)
+      : [{ id: "project-1", title: "Project 1", tasks: [] }]; // Include tasks array here
+  });
 
-  ]);
+  useEffect(() => {
+    localStorage.setItem("projects", JSON.stringify(projects));
+  }, [projects]);
 
   const addNewProject = () => {
     const newProjectId = `project-${projects.length + 1}`;
-    const newProject = {
+    const newProject: Project = {
       id: newProjectId,
       title: `New Project ${projects.length + 1}`,
+      tasks: [], // Initialize with an empty tasks array
     };
     setProjects([...projects, newProject]);
+  };
+
+  const deleteProject = (projectIdToDelete: string) => {
+    setProjects(projects.filter((project) => project.id !== projectIdToDelete));
+
+    // Optionally, also remove the title from localStorage
+    localStorage.removeItem(`projectTitle_${projectIdToDelete}`);
   };
 
   //#endregion
@@ -47,6 +73,8 @@ export default function Dashboard() {
               key={project.id}
               title={project.title}
               projectID={project.id}
+              tasks={project.tasks}
+              onDelete={() => deleteProject(project.id)}
             />
           ))}
         </div>
