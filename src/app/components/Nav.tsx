@@ -3,7 +3,7 @@ import Logo from "../../../public/Logo";
 
 const Nav = ({ LogoOnly = false }) => {
   return (
-    <nav className="fixed top-0 z-10 flex w-full items-center justify-between px-10 py-4 text-zinc-200">
+    <nav className="fixed top-0 z-10 flex w-full items-center justify-between px-10 py-5 text-zinc-200">
       <div className="flex-1">
         <a href="/" aria-label="home">
           <Logo />

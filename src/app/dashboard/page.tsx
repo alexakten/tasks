@@ -47,6 +47,14 @@ export default function Dashboard() {
     localStorage.removeItem(`projectTitle_${projectIdToDelete}`);
   };
 
+  const updateProjectTitle = (projectId: string, newTitle: string) => {
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectId ? { ...project, title: newTitle } : project
+      )
+    );
+  };
+
   //#endregion
 
   return (
@@ -75,6 +83,8 @@ export default function Dashboard() {
               projectID={project.id}
               tasks={project.tasks}
               onDelete={() => deleteProject(project.id)}
+              onUpdateTitle={(newTitle) => updateProjectTitle(project.id, newTitle)}
+
             />
           ))}
         </div>
