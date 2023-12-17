@@ -39,15 +39,33 @@ export default function ProjectPage() {
     }
   }, [projectId]);
 
-  const renderTasks = (
+  const getParentTaskTitle = (
+    path: number[],
     tasks: TaskType[],
-    path: number[] = [],
-    depth: number = 1,
-  ) => {
+    projectTitle: string,
+  ): string => {
+    let currentTasks: TaskType[] = tasks;
+    // Navigate to the last parent task in the path
+    for (let i = 0; i < path.length - 1; i++) {
+      if (currentTasks[path[i]] && currentTasks[path[i]].subtasks) {
+        currentTasks = currentTasks[path[i]].subtasks;
+      }
+    }
+    // Safely access the parent task's title
+    return currentTasks[path[path.length - 1]]?.title || projectTitle;
+  };
+
+  const renderTasks = (tasks: TaskType[], path: number[] = []) => {
+    const parentTitle =
+      path.length === 0
+        ? "Tasks"
+        : getParentTaskTitle(path.slice(0, -1), tasks, "Test");
+
     return (
       <div className="flex items-start gap-16">
-        {/* <p className="text-zinc-100">Depth {depth}</p> */}
         <div className="flex flex-col gap-3">
+          {/* <p className="text-zinc-100">{parentTitle}</p>{" "} */}
+          {/* Display the parent title */}
           {tasks.map((task, index) => (
             <div key={path.concat(index).join("-")}>
               <Task
@@ -70,7 +88,7 @@ export default function ProjectPage() {
             (task, index) =>
               task.subtasks.length > 0 && (
                 <div key={path.concat(index).join("-") + "-sub"}>
-                  {renderTasks(task.subtasks, [...path, index], depth + 1)}
+                  {renderTasks(task.subtasks, [...path, index])}
                 </div>
               ),
           )}
@@ -78,7 +96,6 @@ export default function ProjectPage() {
       </div>
     );
   };
-
 
   const handleTitleChange = (path: number[], newTitle: string) => {
     setTasks((currentTasks) => {
@@ -251,6 +268,23 @@ export default function ProjectPage() {
     }
   }, [tasks, projectId]);
 
+  const handleProjectTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    setProjectTitle(newTitle);
+    // Update project title in local storage
+    const savedProjects = localStorage.getItem("projects");
+    if (savedProjects) {
+      const projects: Project[] = JSON.parse(savedProjects);
+      const updatedProjects = projects.map((project) => {
+        if (project.id === projectId) {
+          return { ...project, title: newTitle };
+        }
+        return project;
+      });
+      localStorage.setItem("projects", JSON.stringify(updatedProjects));
+    }
+  };
+
   return (
     <main className="flex flex-col items-start bg-[#151515]">
       <Nav LogoOnly={true} />
@@ -258,7 +292,13 @@ export default function ProjectPage() {
         <Link className="mb-4 text-white" href={"/dashboard"}>
           {"<- All projects"}
         </Link>
-        <h1 className="mb-4 text-3xl text-zinc-100">{projectTitle}</h1>
+        <input
+          aria-label="Project Title"
+          placeholder="New Project"
+          className="mb-4 border-none bg-transparent text-3xl text-zinc-100 focus:outline-none"
+          value={projectTitle}
+          onChange={handleProjectTitleChange}
+        />{" "}
         <button
           className="mb-20 flex items-center justify-center rounded-full bg-gradient-to-t from-zinc-700 via-zinc-600 to-zinc-500 drop-shadow-sm"
           style={{ padding: 1 }}
