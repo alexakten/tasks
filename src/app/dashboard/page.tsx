@@ -62,11 +62,10 @@ export default function Dashboard() {
   //#endregion
 
   return (
-    <main className="flex flex-col items-center justify-between overflow-hidden bg-[#151515]">
+    <main className="flex flex-col items-center justify-between  bg-[#151515]">
       <Nav LogoOnly={true} />
 
-      {/* Hero Section */}
-      <section className="relative mt-40 h-screen w-screen px-10">
+      <section className="relative mt-40 mb-40 w-screen px-10">
         <div className="mb-12 flex flex-col items-start">
           <h1 className="mb-4 text-3xl text-zinc-100">Projects</h1>
           <button
