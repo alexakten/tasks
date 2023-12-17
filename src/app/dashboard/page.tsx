@@ -65,7 +65,7 @@ export default function Dashboard() {
     <main className="flex flex-col items-center justify-between  bg-[#151515]">
       <Nav LogoOnly={true} />
 
-      <section className="relative mt-40 mb-40 w-screen px-10">
+      <section className="xs:px-10 relative mb-40 mt-40 w-screen px-4">
         <div className="mb-12 flex flex-col items-start">
           <h1 className="mb-4 text-3xl text-zinc-100">Projects</h1>
           <button

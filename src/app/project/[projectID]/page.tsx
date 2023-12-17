@@ -288,7 +288,7 @@ export default function ProjectPage() {
   return (
     <main className="flex flex-col items-start bg-[#151515]">
       <Nav LogoOnly={true} />
-      <section className="mb-40 mt-40 flex min-h-screen flex-col items-start justify-start gap-4 bg-[#151515] px-10">
+      <section className="mb-40 mt-40 flex min-h-screen flex-col items-start justify-start gap-4 bg-[#151515] px-4 xs:px-10">
         <Link className="mb-4 text-white" href={"/dashboard"}>
           {"<- All projects"}
         </Link>
