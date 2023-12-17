@@ -26,7 +26,7 @@ export default function Dashboard() {
     if (savedProjects) {
       setProjects(JSON.parse(savedProjects));
     } else {
-      setProjects([{ id: "project-1", title: "Project 1", tasks: [] }]);
+      setProjects([{ id: "project-1", title: "New Project 1", tasks: [] }]);
     }
   }, []);
 
