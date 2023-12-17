@@ -19,12 +19,16 @@ interface Project {
 export default function Dashboard() {
   //#region
 
-  const [projects, setProjects] = useState<Project[]>(() => {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
     const savedProjects = localStorage.getItem("projects");
-    return savedProjects
-      ? JSON.parse(savedProjects)
-      : [{ id: "project-1", title: "Project 1", tasks: [] }]; // Include tasks array here
-  });
+    if (savedProjects) {
+      setProjects(JSON.parse(savedProjects));
+    } else {
+      setProjects([{ id: "project-1", title: "Project 1", tasks: [] }]);
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("projects", JSON.stringify(projects));
@@ -50,8 +54,8 @@ export default function Dashboard() {
   const updateProjectTitle = (projectId: string, newTitle: string) => {
     setProjects((prevProjects) =>
       prevProjects.map((project) =>
-        project.id === projectId ? { ...project, title: newTitle } : project
-      )
+        project.id === projectId ? { ...project, title: newTitle } : project,
+      ),
     );
   };
 
@@ -83,8 +87,9 @@ export default function Dashboard() {
               projectID={project.id}
               tasks={project.tasks}
               onDelete={() => deleteProject(project.id)}
-              onUpdateTitle={(newTitle) => updateProjectTitle(project.id, newTitle)}
-
+              onUpdateTitle={(newTitle) =>
+                updateProjectTitle(project.id, newTitle)
+              }
             />
           ))}
         </div>

@@ -79,7 +79,7 @@ export default function ProjectPage() {
     );
   };
 
-  // Update the handle functions to correctly navigate the nested structure
+
   const handleTitleChange = (path: number[], newTitle: string) => {
     setTasks((currentTasks) => {
       const newTasks = [...currentTasks];
@@ -98,42 +98,53 @@ export default function ProjectPage() {
     setTasks((currentTasks) => {
       const newTasks = [...currentTasks];
 
-      // Function to recursively update parent task status
-      const updateParentTasks = (path: number[]) => {
-        if (path.length < 2) return; // If there's no parent, stop recursion
-
-        const parentPath = path.slice(0, -1);
-        const parentIndex = parentPath[parentPath.length - 1];
-        let parentTask =
-          parentPath.length === 1
-            ? newTasks[parentIndex]
-            : newTasks[parentPath[0]];
-
-        for (let i = 1; i < parentPath.length; i++) {
-          parentTask = parentTask.subtasks[parentPath[i]];
-        }
-
-        parentTask.done = parentTask.subtasks.every((subtask) => subtask.done);
-        updateParentTasks(parentPath); // Recursively update the status of the parent's parent
+      // Function to recursively toggle child tasks' done status
+      const toggleChildTasksDone = (tasks: TaskType[], doneStatus: boolean) => {
+        tasks.forEach((task) => {
+          task.done = doneStatus;
+          if (task.subtasks.length > 0) {
+            toggleChildTasksDone(task.subtasks, doneStatus);
+          }
+        });
       };
 
-      // Toggle the current task's done status
-      let taskToUpdate: TaskType[] = newTasks;
+      // Function to recursively update parent task status
+      const updateParentTasks = (path: number[]) => {
+        if (path.length < 2) return;
+
+        const parentPath = path.slice(0, -1);
+        let parentTask = newTasks;
+        for (let i = 0; i < parentPath.length; i++) {
+          parentTask =
+            i === parentPath.length - 1
+              ? parentTask
+              : parentTask[parentPath[i]].subtasks;
+        }
+
+        parentTask[parentPath[parentPath.length - 1]].done = parentTask[
+          parentPath[parentPath.length - 1]
+        ].subtasks.every((subtask) => subtask.done);
+
+        updateParentTasks(parentPath);
+      };
+
+      // Navigate to the correct task and toggle its done status
+      let taskToUpdate = newTasks;
       for (let i = 0; i < path.length - 1; i++) {
         taskToUpdate = taskToUpdate[path[i]].subtasks;
       }
       const currentTask = taskToUpdate[path[path.length - 1]];
-      currentTask.done = !currentTask.done;
+      const newDoneStatus = !currentTask.done;
+      currentTask.done = newDoneStatus;
+
+      // If it's a parent task, toggle all child tasks' done status
+      if (currentTask.subtasks.length > 0) {
+        toggleChildTasksDone(currentTask.subtasks, newDoneStatus);
+      }
 
       // Update parent task status if needed
       updateParentTasks(path);
 
-      console.log(
-        "Toggle done for:",
-        path,
-        "new done status:",
-        currentTask.done,
-      );
       return newTasks;
     });
   };
@@ -141,19 +152,41 @@ export default function ProjectPage() {
   const handleAddSubtask = (path: number[]) => {
     setTasks((currentTasks) => {
       const newTasks = [...currentTasks];
-      let taskToUpdate = newTasks;
 
+      // Function to recursively mark parent tasks as not done
+      const markParentTasksNotDone = (path: number[]) => {
+        if (path.length === 0) return;
+
+        const newTasksCopy = [...currentTasks]; // Create a copy of newTasks
+        let taskToUpdate = newTasksCopy;
+
+        // Navigate to the parent task
+        for (let i = 0; i < path.length - 1; i++) {
+          taskToUpdate = taskToUpdate[path[i]].subtasks;
+        }
+
+        // Update the parent task's done status
+        taskToUpdate[path[path.length - 1]].done = false;
+
+        // Recursively call for the parent's parent
+        markParentTasksNotDone(path.slice(0, -1));
+
+        return newTasksCopy;
+      };
+
+      // Navigate to the correct task and add a new subtask
+      let taskToUpdate = newTasks;
       for (let i = 0; i < path.length - 1; i++) {
         taskToUpdate = taskToUpdate[path[i]].subtasks;
       }
-
       taskToUpdate[path[path.length - 1]].subtasks.push({
         title: "",
         done: false,
         subtasks: [],
       });
 
-      console.log("Added node to:", path);
+      // Mark all parent tasks as not done
+      markParentTasksNotDone(path);
 
       return newTasks;
     });
@@ -200,6 +233,7 @@ export default function ProjectPage() {
     });
   };
 
+  // Write data to localStorage on task and project change
   useEffect(() => {
     if (typeof projectId === "string") {
       const savedProjects = localStorage.getItem("projects");
@@ -218,9 +252,9 @@ export default function ProjectPage() {
   }, [tasks, projectId]);
 
   return (
-    <main className="flex min-h-screen w-screen flex-col items-start bg-[#151515]">
+    <main className="flex flex-col items-start bg-[#151515]">
       <Nav LogoOnly={true} />
-      <section className="mb-40 mt-40 flex flex-col items-start justify-start gap-4 px-10">
+      <section className="mb-40 mt-40 flex min-h-screen flex-col items-start justify-start gap-4 bg-[#151515] px-10">
         <Link className="mb-4 text-white" href={"/dashboard"}>
           {"<- All projects"}
         </Link>

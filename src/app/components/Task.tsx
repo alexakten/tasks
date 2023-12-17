@@ -39,7 +39,7 @@ const Task: React.FC<TaskProps> = ({
           />
           <div className="flex flex-col justify-between pt-2">
             <button
-              className={`h-3 w-3 rounded-full border hover:bg-white ${
+              className={`h-3 w-3 rounded-full border hover:bg-zinc-100 ${
                 done
                   ? "border-black bg-zinc-100"
                   : "border-zinc-100  bg-[#252525]"
@@ -58,7 +58,7 @@ const Task: React.FC<TaskProps> = ({
         </div>
       </div>
       <button
-        className="flex h-8 w-8 items-center justify-center rounded-full border border-dotted border-zinc-500 text-xl font-light text-zinc-500 hover:border-zinc-300 hover:text-zinc-300"
+        className="flex h-8 w-8 items-center justify-center rounded-full border border-dotted border-zinc-600 text-xl font-light text-zinc-600 hover:border-zinc-300 hover:text-zinc-300"
         onClick={onAddSubtask}
       >
         +
