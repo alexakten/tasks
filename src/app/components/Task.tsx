@@ -42,7 +42,7 @@ const Task: React.FC<TaskProps> = ({
               className={`h-3 w-3 rounded-full border hover:bg-zinc-100 ${
                 done
                   ? "border-black bg-zinc-100"
-                  : "border-zinc-100  bg-[#252525]"
+                  : "border-zinc-500  bg-[#252525]"
               }`}
               type="button"
               aria-label="toggle done"
